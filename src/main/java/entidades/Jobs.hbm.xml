@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 03-jul-2017 19:38:39 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class dynamic-insert="false" dynamic-update="false" mutable="true" name="entidades.Jobs" optimistic-lock="version" polymorphism="implicit" schema="HR" select-before-update="false" table="JOBS">
+        <comment>jobs table with job titles and salary ranges. Contains 19 rows.
+References with employees and job_history table.</comment>
+        <id name="jobId" type="string">
+            <column length="10" name="JOB_ID"/>
+            <generator class="assigned"/>
+        </id>
+        <property generated="never" lazy="false" name="jobTitle" optimistic-lock="true" type="string" unique="false">
+            <column length="35" name="JOB_TITLE" not-null="true">
+                <comment>A not null column that shows job title, e.g. AD_VP, FI_ACCOUNTANT</comment>
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="minSalary" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="MIN_SALARY" precision="6" scale="0">
+                <comment>Minimum salary for a job title.</comment>
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="maxSalary" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="MAX_SALARY" precision="6" scale="0">
+                <comment>Maximum salary for a job title</comment>
+            </column>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="employeeses" optimistic-lock="true" sort="unsorted" table="EMPLOYEES">
+            <key on-delete="noaction">
+                <column length="10" name="JOB_ID" not-null="true">
+                    <comment>Current job of the employee; foreign key to job_id column of the
+jobs table. A not null column.</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.Employees" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="jobHistories" optimistic-lock="true" sort="unsorted" table="JOB_HISTORY">
+            <key on-delete="noaction">
+                <column length="10" name="JOB_ID" not-null="true">
+                    <comment>Job role in which the employee worked in the past; foreign key to
+job_id column in the jobs table. A not null column.</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.JobHistory" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 03-jul-2017 19:38:39 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class dynamic-insert="false" dynamic-update="false" mutable="true" name="entidades.Departments" optimistic-lock="version" polymorphism="implicit" schema="HR" select-before-update="false" table="DEPARTMENTS">
+        <comment>Departments table that shows details of departments where employees
+work. Contains 27 rows; references with locations, employees, and job_history tables.</comment>
+        <id name="departmentId" type="short">
+            <column name="DEPARTMENT_ID" precision="4" scale="0"/>
+            <generator class="assigned"/>
+        </id>
+        <many-to-one class="entidades.Locations" embed-xml="true" fetch="select" insert="true" name="locations" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="LOCATION_ID" precision="4" scale="0">
+                <comment>Location id where a department is located. Foreign key to location_id column of locations table.</comment>
+            </column>
+        </many-to-one>
+        <many-to-one class="entidades.Employees" embed-xml="true" fetch="select" insert="true" name="employees" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="MANAGER_ID" precision="6" scale="0">
+                <comment>Manager_id of a department. Foreign key to employee_id column of employees table. The manager_id column of the employee table references this column.</comment>
+            </column>
+        </many-to-one>
+        <property generated="never" lazy="false" name="departmentName" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="DEPARTMENT_NAME" not-null="true">
+                <comment>A not null column that shows name of a department. Administration,
+Marketing, Purchasing, Human Resources, Shipping, IT, Executive, Public
+Relations, Sales, Finance, and Accounting. </comment>
+            </column>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="employeeses" optimistic-lock="true" sort="unsorted" table="EMPLOYEES">
+            <key on-delete="noaction">
+                <column name="DEPARTMENT_ID" precision="4" scale="0">
+                    <comment>Department id where employee works; foreign key to department_id
+column of the departments table</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.Employees" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="jobHistories" optimistic-lock="true" sort="unsorted" table="JOB_HISTORY">
+            <key on-delete="noaction">
+                <column name="DEPARTMENT_ID" precision="4" scale="0">
+                    <comment>Department id in which the employee worked in the past; foreign key to deparment_id column in the departments table</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.JobHistory" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

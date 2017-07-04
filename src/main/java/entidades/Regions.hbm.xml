@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 03-jul-2017 19:38:39 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class dynamic-insert="false" dynamic-update="false" mutable="true" name="entidades.Regions" optimistic-lock="version" polymorphism="implicit" schema="HR" select-before-update="false" table="REGIONS">
+        <id name="regionId" type="big_decimal">
+            <column name="REGION_ID" precision="22" scale="0"/>
+            <generator class="assigned"/>
+        </id>
+        <property generated="never" lazy="false" name="regionName" optimistic-lock="true" type="string" unique="false">
+            <column length="25" name="REGION_NAME"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="countrieses" optimistic-lock="true" sort="unsorted" table="COUNTRIES">
+            <key on-delete="noaction">
+                <column name="REGION_ID" precision="22" scale="0">
+                    <comment>Region ID for the country. Foreign key to region_id column in the departments table.</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.Countries" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

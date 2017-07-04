@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 03-jul-2017 19:38:39 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class dynamic-insert="false" dynamic-update="false" mutable="true" name="entidades.HibernateSequence" optimistic-lock="version" polymorphism="implicit" schema="HR" select-before-update="false" table="HIBERNATE_SEQUENCE">
+        <composite-id class="entidades.HibernateSequenceId" mapped="false" name="id" unsaved-value="undefined">
+            <key-property name="tabla" type="string">
+                <column length="20" name="TABLA"/>
+            </key-property>
+            <key-property name="siguiente" type="big_decimal">
+                <column name="SIGUIENTE" precision="22" scale="0"/>
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

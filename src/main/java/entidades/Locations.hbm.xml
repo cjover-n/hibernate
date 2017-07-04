@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 03-jul-2017 19:38:39 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class dynamic-insert="false" dynamic-update="false" mutable="true" name="entidades.Locations" optimistic-lock="version" polymorphism="implicit" schema="HR" select-before-update="false" table="LOCATIONS">
+        <comment>Locations table that contains specific address of a specific office,
+warehouse, and/or production site of a company. Does not store addresses /
+locations of customers. Contains 23 rows; references with the
+departments and countries tables. </comment>
+        <id name="locationId" type="short">
+            <column name="LOCATION_ID" precision="4" scale="0"/>
+            <generator class="assigned"/>
+        </id>
+        <many-to-one class="entidades.Countries" embed-xml="true" fetch="select" insert="true" name="countries" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column length="2" name="COUNTRY_ID">
+                <comment>Country where an office, warehouse, or production site of a company is
+located. Foreign key to country_id column of the countries table.</comment>
+            </column>
+        </many-to-one>
+        <property generated="never" lazy="false" name="streetAddress" optimistic-lock="true" type="string" unique="false">
+            <column length="40" name="STREET_ADDRESS">
+                <comment>Street address of an office, warehouse, or production site of a company.
+Contains building number and street name</comment>
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="postalCode" optimistic-lock="true" type="string" unique="false">
+            <column length="12" name="POSTAL_CODE">
+                <comment>Postal code of the location of an office, warehouse, or production site
+of a company. </comment>
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="city" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="CITY" not-null="true">
+                <comment>A not null column that shows city where an office, warehouse, or
+production site of a company is located. </comment>
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="stateProvince" optimistic-lock="true" type="string" unique="false">
+            <column length="25" name="STATE_PROVINCE">
+                <comment>State or Province where an office, warehouse, or production site of a
+company is located.</comment>
+            </column>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="departmentses" optimistic-lock="true" sort="unsorted" table="DEPARTMENTS">
+            <key on-delete="noaction">
+                <column name="LOCATION_ID" precision="4" scale="0">
+                    <comment>Location id where a department is located. Foreign key to location_id column of locations table.</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.Departments" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

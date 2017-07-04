@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 03-jul-2017 19:38:39 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class dynamic-insert="false" dynamic-update="false" mutable="true" name="entidades.Countries" optimistic-lock="version" polymorphism="implicit" schema="HR" select-before-update="false" table="COUNTRIES">
+        <comment>country table. Contains 25 rows. References with locations table.</comment>
+        <id name="countryId" type="string">
+            <column length="2" name="COUNTRY_ID"/>
+            <generator class="assigned"/>
+        </id>
+        <many-to-one class="entidades.Regions" embed-xml="true" fetch="select" insert="true" name="regions" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="REGION_ID" precision="22" scale="0">
+                <comment>Region ID for the country. Foreign key to region_id column in the departments table.</comment>
+            </column>
+        </many-to-one>
+        <property generated="never" lazy="false" name="countryName" optimistic-lock="true" type="string" unique="false">
+            <column length="40" name="COUNTRY_NAME">
+                <comment>Country name</comment>
+            </column>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="locationses" optimistic-lock="true" sort="unsorted" table="LOCATIONS">
+            <key on-delete="noaction">
+                <column length="2" name="COUNTRY_ID">
+                    <comment>Country where an office, warehouse, or production site of a company is
+located. Foreign key to country_id column of the countries table.</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.Locations" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>
